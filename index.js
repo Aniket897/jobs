@@ -67,11 +67,15 @@ app.get("/start", async (req, resp) => {
 
 app.listen(8080, () => {
   console.log("Server is running");
+  setInterval(() => {
+    console.log("Starting jobs");
+    startJobs();
+  }, 20000);
 });
 
 async function startJobs() {
   try {
-    const response = await axios.get("https://jobs-we52.onrender.com/start");
+    const response = await axios.get("https://jobs-o37o.onrender.com/start");
     console.log(response.data);
   } catch (error) {
     console.log(
@@ -80,8 +84,3 @@ async function startJobs() {
     );
   }
 }
-
-setInterval(() => {
-  console.log("Starting jobs");
-  startJobs();
-}, 20000);
