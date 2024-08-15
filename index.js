@@ -8,8 +8,6 @@ async function Drive() {
   }
 }
 
-Drive();
-
 async function Board() {
   try {
     const response = await fetch(
@@ -22,8 +20,6 @@ async function Board() {
   }
 }
 
-Board();
-
 async function collabe() {
   try {
     const response = await fetch("https://collabe-server.onrender.com/health");
@@ -34,4 +30,8 @@ async function collabe() {
   }
 }
 
-collabe();
+setInterval(() => {
+  collabe();
+  Drive();
+  Board();
+}, 50000);
