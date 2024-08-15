@@ -16,8 +16,12 @@ app.use(
 app.get("/start", async (req, resp) => {
   async function Drive() {
     try {
-      const response = await axios.get(
-        "https://drive-bnpw.onrender.com/auth/login"
+      const response = await axios.post(
+        "https://drive-bnpw.onrender.com/auth/login",
+        {
+          email: "",
+          password: "",
+        }
       );
       console.log(response.data);
     } catch (error) {
@@ -70,7 +74,7 @@ app.listen(8080, () => {
   setInterval(() => {
     console.log("Starting jobs");
     startJobs();
-  }, 50000);
+  }, 10000); // 300000
 });
 
 async function startJobs() {
