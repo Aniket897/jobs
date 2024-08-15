@@ -70,7 +70,7 @@ app.listen(8080, () => {
   setInterval(() => {
     console.log("Starting jobs");
     startJobs();
-  }, 20000);
+  }, 50000);
 });
 
 async function startJobs() {
