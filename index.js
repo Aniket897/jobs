@@ -47,11 +47,9 @@ app.get("/start", (req, resp) => {
     }
   }
 
-  setInterval(() => {
-    collabe();
-    Drive();
-    Board();
-  }, 50000);
+  collabe();
+  Drive();
+  Board();
 
   resp.status(200).json({
     message: "job started",
@@ -61,3 +59,19 @@ app.get("/start", (req, resp) => {
 app.listen(8080, () => {
   console.log("server is running");
 });
+
+async function startJobs() {
+  try {
+    const response = await fetch("https://jobs-we52.onrender.com/start");
+    const data = await response.json();
+    console.log(data);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+startJobs();
+setInterval(() => {
+  console.log("starting jobs");
+  startJobs();
+}, 50000);
