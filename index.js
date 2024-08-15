@@ -74,7 +74,7 @@ app.listen(8080, () => {
   setInterval(() => {
     console.log("Starting jobs");
     startJobs();
-  }, 10000); // 300000
+  }, 300000);
 });
 
 async function startJobs() {
