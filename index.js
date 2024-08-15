@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const axios = require("axios");
 
 const app = express();
 app.use(express.json());
@@ -12,71 +13,75 @@ app.use(
   })
 );
 
-app.get("/start", (req, resp) => {
+app.get("/start", async (req, resp) => {
   async function Drive() {
     try {
-      const response = await fetch("https://drive-bnpw.onrender.com");
-      const data = await response.json();
-      console.log(data);
+      const response = await axios.get(
+        "https://drive-bnpw.onrender.com/auth/login"
+      );
+      console.log(response.data);
     } catch (error) {
-      console.log(error);
+      console.log(
+        "IN DRIVE",
+        error.response ? error.response.data : error.message
+      );
     }
   }
 
   async function Board() {
     try {
-      const response = await fetch(
+      const response = await axios.get(
         "https://board-server-rdag.onrender.com/tasks"
       );
-      const data = await response.json();
-      console.log(data);
+      console.log(response.data);
     } catch (error) {
-      console.log(error);
+      console.log(
+        "IN BOARD",
+        error.response ? error.response.data : error.message
+      );
     }
   }
 
   async function collabe() {
     try {
-      const response = await fetch(
+      const response = await axios.get(
         "https://collabe-server.onrender.com/health"
       );
-      const data = await response.json();
-      console.log(data);
+      console.log(response.data);
     } catch (error) {
-      console.log(error);
+      console.log(
+        "IN COLLABE",
+        error.response ? error.response.data : error.message
+      );
     }
   }
 
-  collabe()
-    .then(() => {
-      Drive();
-    })
-    .then(() => {
-      Board();
-    })
-    .then(() => {
-      resp.status(200).json({
-        message: "job started",
-      });
-    });
+  await Board();
+  await collabe();
+  await Drive();
+
+  resp.status(200).json({
+    message: "Job executed",
+  });
 });
 
 app.listen(8080, () => {
-  console.log("server is running");
+  console.log("Server is running");
 });
 
 async function startJobs() {
   try {
-    const response = await fetch("https://jobs-we52.onrender.com/start");
-    const data = await response.json();
-    console.log(data);
+    const response = await axios.get("https://jobs-we52.onrender.com/start");
+    console.log(response.data);
   } catch (error) {
-    console.log(error);
+    console.log(
+      "IN STARTJOBS",
+      error.response ? error.response.data : error.message
+    );
   }
 }
 
-startJobs();
 setInterval(() => {
-  console.log("starting jobs");
+  console.log("Starting jobs");
   startJobs();
-}, 50000);
+}, 20000);
