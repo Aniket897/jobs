@@ -47,13 +47,18 @@ app.get("/start", (req, resp) => {
     }
   }
 
-  collabe();
-  Drive();
-  Board();
-
-  resp.status(200).json({
-    message: "job started",
-  });
+  collabe()
+    .then(() => {
+      Drive();
+    })
+    .then(() => {
+      Board();
+    })
+    .then(() => {
+      resp.status(200).json({
+        message: "job started",
+      });
+    });
 });
 
 app.listen(8080, () => {
